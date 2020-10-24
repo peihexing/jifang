@@ -1,6 +1,18 @@
 <template>
   <div class="wrap">
+    <div class="nav-bar">
+      <div class="btn-icon"></div>
+      <div class="btn-text"></div>
+    </div>
     <div class="wrap-left">
+      <div class="wraning-box">
+        <div class="title">设备描述</div>
+        <div class="content">
+          <div>设备归属：蒙东鄂尔多斯特高压变电站信息通信机房</div>
+        </div>
+      </div>
+
+
       <div class="wraning-box">
         <div class="title">告警信息</div>
         <div class="box-content">
@@ -29,61 +41,7 @@
         </div>
       </div>
 
-      <div class="wraning-box">
-        <div class="title">运行日志</div>
-        <div class="search-wrap">
-          <div class="data-cp">
-            {{ formatDate(startDate) }}
-            <div class="date-picker">
-              <el-date-picker
-                v-model="startDate"
-                type="date"
-                placeholder="选择日期"
-                @change="startDateChagne"
-              >
-              </el-date-picker>
-            </div>
-          </div>
-          <div class="date-line">至</div>
-          <div class="data-cp">
-            {{ formatDate(endDate) }}
-            <div class="date-picker">
-              <el-date-picker
-                v-model="endDate"
-                type="date"
-                placeholder="选择日期"
-                @change="startDateChagne"
-              >
-              </el-date-picker>
-            </div>
-          </div>
-          <div class="search-btn">搜索</div>
-        </div>
-        <div class="box-content">
-          <div class="msg-wrap">
-            <div class="msg-left">
-              <div class="log-icon ver-aligin"></div>
-            </div>
-            <div class="msg-mid">
-              2020.7.2日10点37分，鄂尔多斯机房电源柜报警信息数据异常，建议程序员对数据进行排查...
-            </div>
-            <div class="msg-right">
-              <div class="btn-self ver-aligin">查看</div>
-            </div>
-          </div>
-          <div class="msg-wrap">
-            <div class="msg-left">
-              <div class="log-icon ver-aligin"></div>
-            </div>
-            <div class="msg-mid">
-              2020.7.2日10点37分，鄂尔多斯机房电源柜报警信息数据异常，建议程序员对数据进行排查...
-            </div>
-            <div class="msg-right">
-              <div class="btn-self ver-aligin">查看</div>
-            </div>
-          </div>
-        </div>
-      </div>
+      
 
       <div class="wraning-box">
         <div class="title">安全态势分析</div>
@@ -91,9 +49,64 @@
     </div>
     <div class="wrap-right">
       <div class="devices-box">
-        <div class="device-12">
-          <div class="device-left"></div>
-          <div class="device-right">12</div>
+        <div class="title-bar">
+          <div class="title-before-icon">
+          </div>
+          <div class="title-1">T12 1号通信电源屏</div>
+          
+        </div>
+        <div class="title-2">ATC 1# 通信电源柜</div>
+        <div class="device-level-1">
+          <div class="level-1-left">
+            <div  class="dianyabiao">
+
+            </div>
+            <div  class="dianyabiao">
+
+            </div>
+            <div  class="dianyabiao">
+
+            </div>
+            <div  class="dianyabiao">
+
+            </div>
+          </div>
+          <div class="level-1-right">
+            <div class="power-box">
+
+            </div>
+            <div class="power-text">
+              <div class="power-t">1组蓄电池电压监视器</div>
+            </div>
+          </div>
+        </div>
+        <div class="device-level-2">
+          <div class="screen"></div>
+        </div>
+        <div class="device-level-3">
+          <div class="light"></div>
+          <div class="light"></div>
+          <div class="light"></div>
+          <div class="light"></div>
+        </div>
+        <div class="device-level-3">
+          <div class="light"></div>
+          <div class="light"></div>
+          <div class="light"></div>
+          <div class="light"></div>
+        </div>
+        <div class="device-level-4">
+          <div class="banshou-box">
+            <div class="banshou-top"></div>
+            <div class="banshou-bottom"></div>
+          </div>
+          <div class="banshou-box">
+            <div class="banshou-top"></div>
+            <div class="banshou-bottom banshou-bottom-90deg"></div>
+          </div>
+        </div>
+        <div class="device-level-5">
+
         </div>
       </div>
     </div>
@@ -149,7 +162,7 @@ export default {
   position: relative;
 }
 .wrap-right {
-  width: 690px;
+  width: 480px;
   height: 100%;
   display: flex;
 }
@@ -162,9 +175,9 @@ export default {
 .devices-box {
   background-size: 100% 100%;
   background-repeat: no-repeat;
-  width: 658px;
+  width: 322px;
   height: 550px;
-  background-image: url(../../../static/box-line-2.png);
+  background-image: url(../../../static/bg@2x.png);
   align-self: center;
   position: relative;
   margin: auto;
@@ -319,5 +332,150 @@ export default {
 }
 ::-webkit-scrollbar-thumb:window-inactive {
   background: rgba(255, 0, 0, 0.4);
+}
+
+.nav-bar{
+  position: absolute;
+  top: -14px;
+  left: 20px;
+  cursor: pointer;
+}
+.btn-icon{
+  width: 22px;
+  height: 20px;
+  display: inline-block;
+  background-image: url(../../../static/backicon.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+.btn-text{
+  width: 70px;
+  height: 15px;
+  display: inline-block;
+  background-image: url(../../../static/backhome.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  position: relative;
+  top: -3px;
+  left: 5px;
+}
+.title-bar{
+  height: 27px;
+  width: 142px;
+  background-image: url(../../../static/13@2x.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  display: inline-block;
+}
+.title-before-icon{
+  top: 4px;
+  left: 4px;
+  height: 19px;
+  width: 12px;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-image: url(../../../static/title-icon.png);
+  position: absolute;
+}
+.title-1{
+  display: inline-block;
+  color: #2595e3;
+  transform: scale(0.8,0.8);
+  font-style: italic;
+  position: relative;
+  top: 3px;
+  left: 6px;
+}
+.title-2{
+  display: inline-block;
+  color: #2595e3;
+  transform: scale(0.8,0.8);
+  font-style: italic;
+  position: relative;
+  top: 5px;
+  left: -24px;
+}
+.dianyabiao{
+  width: 80px;
+  height: 60px;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-image: url(../../../static/277.png);
+  display: inline-block;
+}
+.device-level-1{
+  display: flex;
+  flex-direction: row;
+  margin-top: 10px;
+}
+.device-level-2,.device-level-3,.device-level-4{
+  border-bottom: 1px solid #325184;
+}
+.device-level-3{
+  text-align: center;
+}
+.level-1-left{
+  width: 230px;
+  overflow: auto;
+  text-align: center;
+}
+.power-box{
+  width: 40px;
+  height: 40px;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-image: url(../../../static/椭圆.png);
+}
+.power-text{
+  width: 50px;
+  height: 20px;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-image: url(../../../static/289@2x.png);
+}
+.power-t{
+  transform: scale(0.5,0.5);
+}
+.screen{
+  margin-left:113px;
+  width: 90px;
+  height: 51px;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-image: url(../../../static/280@2x.png);
+}
+.light{
+  width: 70px;
+  height: 74px;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-image: url(../../../static/4@2x.png);
+  display: inline-block;
+}
+.banshou-box{
+  display: inline-block;
+  text-align: center;
+  margin: 0 20px;
+}
+.banshou-top{
+  width: 60px;
+  height: 20px;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-image: url(../../../static/289@2x.png);
+}
+.banshou-bottom{
+  width: 21px;
+  height: 39px;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-image: url(../../../static/手柄@2x.png);
+  display: inline-block;
+}
+.banshou-bottom-90deg{
+  transform: rotate(-90deg);
+}
+.device-level-4{
+  text-align: center;
 }
 </style>
