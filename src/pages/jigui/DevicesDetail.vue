@@ -86,12 +86,9 @@
       <div style="display:flex;flex-direction:row;padding: 0px 20px;" >
         <div class="wraning-box-full" style="width:298px;" v-show="showMoniter">
           <div class="title">监控设定</div>
-          <div class="box-content" style="padding:0px 20px;color:#fff;font-size:12px">
+          <div class="box-content" style="padding:0px 20px;color:#fff;font-size:12px;color: #2595e3">
             <!-- 电压设定 -->
             <div>
-              <div>
-                <span class="setting-label">信号ID:</span>{{chooseSignalId}}
-              </div>
               <div class="setting-item" v-show="settingType == '00001'">
                 <span class="setting-label">正常范围：</span><input style="width:60px" type="text" v-model="meterStartValue"/> V 至 <input type="text" style="width:60px" v-model="meterEndValue"/> V
               </div>
@@ -109,6 +106,15 @@
                 <div class="waring-level" :class="{'waring-level-active': chooseIdx1 == 2}" @click="chooseLevel1(2)">二级</div>
                 <div class="waring-level" :class="{'waring-level-active': chooseIdx1 == 3}" @click="chooseLevel1(3)">三级</div>
                 <div class="waring-level" :class="{'waring-level-active': chooseIdx1 == 4}" @click="chooseLevel1(4)">四级</div>
+              </div>
+              <div class="setting-item" v-show="settingType == '00001'">
+                说明: 当表显电压值超出设定范围时触发告警。
+              </div>
+              <div class="setting-item" v-show="settingType == '00002'">
+                说明: 绿灯亮为正常运行，故障状态依照设定告警。
+              </div>
+              <div class="setting-item" v-show="settingType == '00003' || settingType == '00004'">
+                说明: 开关状态仅监控状态改变，当状态改变时触发告警。
               </div>
               <div class="btn-self" style="float: right;margin-top: 10px;" @click="okSetting()">确定</div>
             </div>
