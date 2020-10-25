@@ -13,6 +13,7 @@ let routes = [{
         path: '/',
         component: Home,
         title: "首页",
+        redirect:'/devices',
         children: [{
             path: '/devices',
             component: Devices,

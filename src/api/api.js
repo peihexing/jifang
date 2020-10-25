@@ -1,4 +1,5 @@
-let baseUrl = 'http://111.229.254.185/questionnaire/v1.0';
+let baseUrl = 'http://39.105.48.131/smart/monitor/v1.0';
+// http://39.105.48.131:8080/smart/monitor/v1.0/device/description
 import qs from 'qs';
 import request from './request'
 
@@ -37,5 +38,40 @@ export const deleteUser = params => { return request.post(`${baseUrl}/user/del`,
 
 export const analysis = params=> { return request.get(`${baseUrl}/statistic/analysis`, { params: params }); };
 
-export const crossAnalysis = params=> { return request.get(`${baseUrl}/cross/analysis`, { params: params }); };
+export const getDeviceDescription = params=> { return request.get(`${baseUrl}/device/description`, { params: params }); };
+
+
+export const getSignalInfo = params=> { return request.get(`${baseUrl}/signal/info`, { params: params }); };
+
+export const getExceptInfo = params=> { return request.get(`${baseUrl}/device/except/info`, { params: params }); };
+
+export const getExceptLog = params=> { return request.get(`${baseUrl}/device/except/log`, { params: params }); };
+
+
+export const exceptDeal = params => { return request.post(`${baseUrl}/device/except/deal`, qs.stringify(params)); };
+
+export const holdinfo = params => { return request.post(`${baseUrl}/device/holdinfo`, qs.stringify(params)); };
+
+export const metreAdd = params => { return request.post(`${baseUrl}/metre/add`, qs.stringify(params)); };
+
+
+export const getInfoDetail = params=> { return request.get(`${baseUrl}/device/info/detail`, { params: params }); };
+
+
+// getDeviceDescription({
+//     eleccabinetid: 'md.xt.010012'
+// }).then(res =>{
+//     debugger
+// })
+
+
+
+
+
+getExceptInfo({
+    id: 'md.xt.010012',
+    type: '1'    //type 1机柜2设备
+}).then(res => {
+
+})
 

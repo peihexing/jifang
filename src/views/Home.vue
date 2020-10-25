@@ -33,15 +33,15 @@
 			}
 		},
 		created() {
-			getUserList({
-				user_type: 2
-			}).then(res => {
-				res.forEach(item => {
-					if (this.sysUserName == item.phoneNumber) {
-						this.showUserCenter = true;
-					}
-				})
-			});
+			// getUserList({
+			// 	user_type: 2
+			// }).then(res => {
+			// 	res.forEach(item => {
+			// 		if (this.sysUserName == item.phoneNumber) {
+			// 			this.showUserCenter = true;
+			// 		}
+			// 	})
+			// });
 		},
 		methods: {
 			
