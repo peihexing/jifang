@@ -66,6 +66,7 @@
 
       <div class="wraning-box">
         <div class="title">安全态势分析</div>
+        <Statics></Statics>
       </div>
     </div>
     <div class="wrap-right">
@@ -104,6 +105,8 @@ import {
   getExceptLog
 } from "../../api/api";
 
+import Statics from './static.vue'
+
 
 export default {
   data() {
@@ -123,12 +126,15 @@ export default {
       showDealBtn:true
     };
   },
+  components: {
+    Statics
+  },
   created() {
     let self = this;
     self.updateLogs();
     window.setInterval(function() {
-      this.getExceptInfo(this.eleccabinetid,1);
-    }, 5000);
+      self.getExceptInfo(self.eleccabinetid,1);
+    }, 10000);
   },
   methods: {
     clozeDialog() {
@@ -199,7 +205,7 @@ export default {
       this.dialogContent = log.resultDescription;
       this.dialogPsn = log.handler;
     },
-    getExceptInfo(id,type) {
+    getExceptInfo(id,type) {debugger
       let self = this;
       getExceptInfo({
         id: id,
