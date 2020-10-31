@@ -2,13 +2,13 @@
   <div class="swiper">
     <swiper ref="mySwiper" class="swiper-com" :options="swiperOptions">
       <swiper-slide>
-        <div class="swiper-item" id="echart1"></div>
+        <div class="swiper-item" id="echart1" :key="1"></div>
       </swiper-slide>
       <swiper-slide>
-        <div class="swiper-item" id="echart2"></div>
+        <div class="swiper-item" id="echart2" :key="2"></div>
       </swiper-slide>
       <swiper-slide>
-        <div class="swiper-item" id="echart3"></div>
+        <div class="swiper-item" id="echart3" :key="3"></div>
       </swiper-slide>
       <div class="swiper-pagination" slot="pagination"></div>
     </swiper>
