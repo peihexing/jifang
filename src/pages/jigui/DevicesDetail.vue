@@ -154,7 +154,7 @@
         <div class="title-2">ATC 1# 通信电源柜</div>
         <div class="device-level-1">
           <div class="level-1-left">
-            <div  class="dianyabiao" v-for="(item,idx) in devices1" :key="idx" @click="gotoDevice(item,devicesIdMap[1])">
+            <div  :class="{'dianliubiao': idx > 1,'dianyabiao': idx<2,'active': row[1]==idx}" v-for="(item,idx) in devices1" :key="idx" @click="gotoDevice(item,devicesIdMap[1],1,idx)">
                 <div class="metre-num">{{item.metervalue}}</div>
             </div>
             
@@ -172,34 +172,34 @@
           <div class="screen"></div>
         </div>
         <div class="device-level-3">
-          <div class="light" v-for="(item,idx) in devices2" :key="idx"  @click="gotoDevice(item,devicesIdMap[2])">
+          <div class="light" :class="{'active': row[2]==idx}" v-for="(item,idx) in devices2" :key="idx"  @click="gotoDevice(item,devicesIdMap[2],2,idx)">
             <div class="light-red" v-show="item.redlightstatus==1"></div>
             <div class="light-yellow" v-show="item.yellowlightstatus==1"></div>
             <div class="light-gray" v-show="item.greenlightstatus==0"></div>
           </div> 
         </div>
         <div class="device-level-3">
-          <div class="light" v-for="(item,idx) in devices3" :key="idx"  @click="gotoDevice(item,devicesIdMap[3])">
+          <div class="light" :class="{'active': row[3]==idx}" v-for="(item,idx) in devices3" :key="idx"  @click="gotoDevice(item,devicesIdMap[3],3,idx)">
             <div class="light-red" v-show="item.redlightstatus==1"></div>
             <div class="light-yellow" v-show="item.yellowlightstatus==1"></div>
             <div class="light-gray" v-show="item.greenlightstatus==0"></div>
           </div> 
         </div>
         <div class="device-level-4">
-          <div class="banshou-box" v-for="(item,idx) in devices4" :key="idx"  @click="gotoDevice(item,devicesIdMap[4])">
+          <div class="banshou-box" :class="{'active': row[4]==idx}" v-for="(item,idx) in devices4" :key="idx"  @click="gotoDevice(item,devicesIdMap[4],4,idx)">
             <div class="banshou-top"></div>
             <div class="banshou-bottom" :class="{'banshou-bottom-90deg':item.handlestatus!=1}"></div>
           </div>
         </div>
         <div class="device-level-5">
-          <div class="switch" v-for="(item,idx) in devices5" :key="idx"  @click="gotoDevice(item,devicesIdMap[5])">
+          <div class="switch" :class="{'active': row[5]==idx}" v-for="(item,idx) in devices5" :key="idx"  @click="gotoDevice(item,devicesIdMap[5],5,idx)">
             <div :class="{'light-open':item.redlightstatus==1,'light-close':item.redlightstatus==0}"></div>
             <div :class="{'swith-open':item.switchstatus==1,'swith-close':item.switchstatus==0}"></div>
           </div>
           
         </div>
         <div class="device-level-6">
-          <div class="switch" v-for="(item,idx) in devices6" :key="idx"  @click="gotoDevice(item, devicesIdMap[6])">
+          <div class="switch" :class="{'active': row[6]==idx}" v-for="(item,idx) in devices6" :key="idx"  @click="gotoDevice(item, devicesIdMap[6],6,idx)">
             <div :class="{'light-open':item.redlightstatus==1,'light-close':item.redlightstatus==0}"></div>
             <div :class="{'swith-open':item.switchstatus==1,'swith-close':item.switchstatus==0}"></div>
           </div>
@@ -269,7 +269,8 @@ export default {
       meterStartValue:"",
       meterEndValue:"",
       setting: {},
-      chooseSignalId: ""
+      chooseSignalId: "",
+      row:[]
     };
   },
   created() {
@@ -348,7 +349,7 @@ export default {
       })
 
     },
-    gotoDevice(device, deviceProperty) {
+    gotoDevice(device, deviceProperty, row, idx) {
       console.log(device,deviceProperty);
       this.chooseIdx = "";
       this.chooseIdx1="";
@@ -358,6 +359,8 @@ export default {
       this.settingType = deviceProperty.type;
       let deviceId = deviceProperty.id;
       let signalId ="";
+      this.row = [];
+      this.row[row] = idx;
       
       switch(this.settingType) {
         case "00001":
@@ -853,6 +856,16 @@ export default {
   position: relative;
   margin: 0px 5px;
 }
+.dianliubiao{
+  width: 72px;
+  height: 47px;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-image: url(../../../static/a.png);
+  display: inline-block;
+  position: relative;
+  margin: 0px 5px;
+}
 .device-level-1{
   display: flex;
   flex-direction: row;
@@ -1194,5 +1207,10 @@ input{
   height: 6px;
   width: 6px;
   border-radius: 50%;
+}
+.active{
+  border:1px solid #fff;
+  border-radius: 2px;
+  box-shadow:inset 0px 0px 5px 1px #fff;
 }
 </style>

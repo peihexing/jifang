@@ -308,7 +308,7 @@ export default {
   background-repeat: no-repeat;
   width: 658px;
   height: 550px;
-  background-image: url(../../../static/box-line-2.png);
+  background-image: url(../../../static/bg-1.png);
   align-self: center;
   position: relative;
   margin: auto;
@@ -397,7 +397,7 @@ export default {
 .device-right {
   color: #fff;
   font-size: 15px;
-  transform: rotate(-90deg);
+  /* transform: rotate(-90deg); */
   display: inline-block;
   text-align: center;
   position: absolute;
