@@ -14,6 +14,12 @@ import routes from './routes'
 // Mock.bootstrap();
 import 'font-awesome/css/font-awesome.min.css'
 
+import VueAwesomeSwiper from 'vue-awesome-swiper'
+import 'swiper/swiper-bundle.css'
+
+
+Vue.use(VueAwesomeSwiper)
+
 Vue.use(ElementUI)
 Vue.use(VueRouter)
 Vue.use(Vuex)

@@ -1,7 +1,8 @@
 <template>
   <div class="wrap">
     <div class="wrap-left">
-      <div class="wraning-box">
+      <div class="wraning-box" style="position:relative;">
+        <div class="title-top">蒙东鄂尔多斯1000KV特高压信息机房</div>
         <div class="title">告警信息</div>
         <div class="box-content">
           <div class="msg-wrap" v-for="(item,idx) in warningList" :key="idx">
@@ -46,7 +47,7 @@
               </el-date-picker>
             </div>
           </div>
-          <div class="search-btn" @click="searchLog()">搜索</div>
+          <div class="search-btn" @click="searchLog()">检索</div>
         </div>
         <div class="box-content">
           <div class="msg-wrap" v-for="(item,idx) in logList" :key="idx">
@@ -66,6 +67,7 @@
 
       <div class="wraning-box">
         <div class="title">安全态势分析</div>
+        <Statics></Statics>
       </div>
     </div>
     <div class="wrap-right">
@@ -104,6 +106,8 @@ import {
   getExceptLog
 } from "../../api/api";
 
+import Statics from './static.vue'
+
 
 export default {
   data() {
@@ -123,12 +127,15 @@ export default {
       showDealBtn:true
     };
   },
+  components: {
+    Statics
+  },
   created() {
     let self = this;
     self.updateLogs();
     window.setInterval(function() {
-      this.getExceptInfo(this.eleccabinetid,1);
-    }, 5000);
+      self.getExceptInfo(self.eleccabinetid,1);
+    }, 10000);
   },
   methods: {
     clozeDialog() {
@@ -199,7 +206,7 @@ export default {
       this.dialogContent = log.resultDescription;
       this.dialogPsn = log.handler;
     },
-    getExceptInfo(id,type) {
+    getExceptInfo(id,type) {debugger
       let self = this;
       getExceptInfo({
         id: id,
@@ -558,5 +565,13 @@ export default {
   color: #2696E4;
   padding-left: 5px;
   height: 26px;
+}
+.title-top{
+  color: #fff;
+  font-size: 16px;
+  top: -30px;
+  position: absolute;
+  left: 10px;
+  font-weight: bold;
 }
 </style>

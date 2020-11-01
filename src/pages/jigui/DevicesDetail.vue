@@ -9,7 +9,7 @@
         <div class="title">设备描述</div>
         <div class="content">
           <div style="display:inline-block;" class="lineHeight">设备归属：{{description.site}}</div>
-          <div style="display:inline-block;margin-left:30px" class="lineHeight">机构号：{{description.eleccabinetid}}</div>
+          <div style="display:inline-block;margin-left:30px" class="lineHeight">机柜号：{{description.eleccabinetid}}</div>
           <div style="display:inline-block;margin-left:30px" class="lineHeight" v-show="description.deviceid">设备ID：{{description.deviceid}}</div>
           <div class="lineHeight">设备描述：{{description.name}}</div>
           <div class="lineHeight">
@@ -140,6 +140,7 @@
       </div>
       <div class="wraning-box">
         <div class="title">安全态势分析</div>
+        <Statics></Statics>
       </div>
     </div>
     <div class="wrap-right">
@@ -236,6 +237,7 @@ import {
   metreAdd,
   getInfoDetail
 } from "../../api/api";
+import Statics from './static.vue'
 
 export default {
   data() {
@@ -278,7 +280,10 @@ export default {
     self.getDeviceDescription(id,1);
     window.setInterval(function() {
       self.update();
-    }, 5000)
+    }, 10000)
+  },
+  components: {
+    Statics
   },
   methods: {
     chooseLevel(idx) {
@@ -463,7 +468,7 @@ export default {
       this.dialogContent = "";
       this.dialogPsn = "";
     },
-    getExceptInfo(id,type) {
+    getExceptInfo(id,type) {debugger
       let self = this;
       getExceptInfo({
         id: id,

@@ -57,21 +57,11 @@ export const metreAdd = params => { return request.post(`${baseUrl}/metre/add`, 
 
 export const getInfoDetail = params=> { return request.get(`${baseUrl}/device/info/detail`, { params: params }); };
 
-
-// getDeviceDescription({
-//     eleccabinetid: 'md.xt.010012'
-// }).then(res =>{
-//     debugger
-// })
+export const getCountInfo = params=> { return request.get(`${baseUrl}/count/info`, { params: params }); };
 
 
 
 
 
-getExceptInfo({
-    id: 'md.xt.010012',
-    type: '1'    //type 1机柜2设备
-}).then(res => {
 
-})
 
