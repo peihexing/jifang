@@ -6,15 +6,16 @@
     </div>
     <h3 class="title">智慧机房全景信息平台</h3>
     <el-form-item prop="phone">
-      <el-input type="text" v-model="loginForm.phone" auto-complete="off" placeholder="请输入手机号"></el-input>
+      <el-input type="text" v-model="loginForm.phone" auto-complete="off" placeholder="请输账号"></el-input>
     </el-form-item>
     <el-form-item prop="msg">
-      <el-col :span="16">
+      <el-input type="password" v-model="loginForm.msg" auto-complete="off" placeholder="请输密码"></el-input>
+      <!-- <el-col :span="16">
         <el-input type="password" v-model="loginForm.msg" auto-complete="off" placeholder="请输短信验证码"></el-input>
-      </el-col>
-      <el-col :span="8" style="text-align:right">
+      </el-col> -->
+      <!-- <el-col :span="8" style="text-align:right">
         <el-button type="success" style="width:100px;" :disabled="isDisabled" @click="getMsgHandle">{{msgBtnText}}</el-button>
-      </el-col>
+      </el-col> -->
     </el-form-item>
     <el-form-item style="width:100%;">
       <el-button type="primary" style="width:100%;" @click.native.prevent="loginHandle" >登录</el-button>      
@@ -24,7 +25,7 @@
 </template>
 
 <script>
-  import { loginByMsg, loginSend } from '../api/api';
+  import { login } from '../api/api';
   import { Message } from 'element-ui'
   //import NProgress from 'nprogress'
   export default {
@@ -92,16 +93,16 @@
           })
         }
       },
-      loginHandle(ev) {
+      loginHandle(ev) {debugger
         var _this = this;
         this.$refs.loginForm.validate((valid) => {
           if (valid) {
             //NProgress.start();
-            var loginParams = { user_phone: this.loginForm.phone, passward: this.loginForm.msg };
-            loginByMsg(loginParams).then(data => {
+            var loginParams = { userId: this.loginForm.phone, passward: this.loginForm.msg };debugger
+            login(loginParams).then(data => {
               
               localStorage.setItem('user', this.loginForm.phone);
-              this.$router.push({ path: '/create' });
+              this.$router.push({ path: '/' });
               
             });
           } else {

@@ -37,16 +37,16 @@ service.interceptors.response.use(
    * You can also judge the status by HTTP Status Code
    */
   response => {
-    if (response.data.code != 0) {
-      if (response.data.message == 'no login, please login') {
+    if (response.data.code != 0) {debugger
+      if (response.data.message == 'please login') {
         window.$router.push('/login');
       }
       Message({
-        message: response.data.message || 'Error',
-        type: 'error',
+        message: response.data.msg || response.data.message || 'Error',
+        type: response.data.msg,
         duration: 5 * 1000
       })
-      throw new Error(response.data.message);
+      throw new Error(response.data.msg);
     } else {
       jsonToHump(response.data);
       return response.data.data;

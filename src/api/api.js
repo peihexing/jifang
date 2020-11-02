@@ -59,8 +59,10 @@ export const getInfoDetail = params=> { return request.get(`${baseUrl}/device/in
 
 export const getCountInfo = params=> { return request.get(`${baseUrl}/count/info`, { params: params }); };
 
+export const login = params=> { return request.get(`${baseUrl}/login/passwd/`, { params: params }); };
 
 
+export const registered = params => { return request.post(`${baseUrl}/login/registered/`, qs.stringify(params)); };
 
 
 
