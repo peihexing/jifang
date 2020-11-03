@@ -90,7 +90,7 @@
             <!-- 电压设定 -->
             <div>
               <div class="setting-item" v-show="settingType == '00001'">
-                <span class="setting-label">正常范围：</span><input style="width:60px" type="text" v-model="meterStartValue"/> V 至 <input type="text" style="width:60px" v-model="meterEndValue"/> V
+                <span class="setting-label">正常范围：</span><input style="width:60px" type="text" v-model="meterStartValue"/> {{(meterIndex <= 2)?'V':'A'}} 至 <input type="text" style="width:60px" v-model="meterEndValue"/> {{(meterIndex <= 2)?'V':'A'}} 
               </div>
               <!-- <div class="setting-item" v-show="settingType == '00001'">
                 <span class="setting-label">目前：</span>{{currentMeterValue}}V
@@ -270,7 +270,8 @@ export default {
       meterEndValue:"",
       setting: {},
       chooseSignalId: "",
-      row:[]
+      row:[],
+      meterIndex: 0
     };
   },
   created() {
@@ -362,9 +363,11 @@ export default {
       this.row = [];
       this.row[row] = idx;
       
+      
       switch(this.settingType) {
         case "00001":
           signalId = device.metreid;
+          this.meterIndex = signalId;
           this.currentMeterValue = device.metervalue;
           break;
         case "00002":

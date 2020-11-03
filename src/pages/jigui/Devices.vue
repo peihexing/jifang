@@ -1,19 +1,21 @@
 <template>
   <div class="wrap">
     <div class="wrap-left">
-      <div class="wraning-box" style="position:relative;">
+      <div class="wraning-box" style="position: relative">
         <div class="title-top">蒙东鄂尔多斯1000KV特高压信息机房</div>
         <div class="title">告警信息</div>
         <div class="box-content">
-          <div class="msg-wrap" v-for="(item,idx) in warningList" :key="idx">
+          <div class="msg-wrap" v-for="(item, idx) in warningList" :key="idx">
             <div class="msg-left">
               <div class="notice-icon ver-aligin"></div>
             </div>
             <div class="msg-mid">
-              {{item.description}}
+              {{ item.description }}
             </div>
             <div class="msg-right">
-              <div class="btn-self ver-aligin" @click="showWarinDetail(item)">查看</div>
+              <div class="btn-self ver-aligin" @click="showWarinDetail(item)">
+                查看
+              </div>
             </div>
           </div>
         </div>
@@ -50,18 +52,25 @@
           <div class="search-btn" @click="searchLog()">检索</div>
         </div>
         <div class="box-content">
-          <div class="msg-wrap" v-for="(item,idx) in logList" :key="idx">
+          <div class="msg-wrap" v-for="(item, idx) in logList" :key="idx">
             <div class="msg-left">
               <div class="log-icon ver-aligin"></div>
             </div>
             <div class="msg-mid">
-              {{item.description}}
+              {{ item.description }}
             </div>
             <div class="msg-right">
-              <div class="btn-self ver-aligin" @click="gotoLogDetail(item)">查看</div>
+              <div class="btn-self ver-aligin" @click="gotoLogDetail(item)">
+                查看
+              </div>
             </div>
           </div>
-          <div class="under-line" v-for="(item,idx) in logList" :key="idx" v-show="idx!=(logList.length-1)"></div>
+          <div
+            class="under-line"
+            v-for="(item, idx) in logList"
+            :key="idx"
+            v-show="idx != logList.length - 1"
+          ></div>
         </div>
       </div>
 
@@ -71,6 +80,7 @@
       </div>
     </div>
     <div class="wrap-right">
+      <div class="modify_passwd" @click="modifyPwd">修改密码</div>
       <div class="devices-box">
         <div class="device-12" @click="gotoDeviceDetail()">
           <div class="device-left"></div>
@@ -79,62 +89,95 @@
       </div>
     </div>
     <div class="dialog" v-show="dialogShow">
-      <div class="dialog-title">
-        告警（{{warinTitle}}）
-      </div>
-      <div class="dialog-msg" >
-        {{dialogMsg}}
+      <div class="dialog-title">告警（{{ warinTitle }}）</div>
+      <div class="dialog-msg">
+        {{ dialogMsg }}
       </div>
       <div class="dialog-text">处理方法：</div>
       <div class="dialog-content">
         <textarea v-model="dialogContent"></textarea>
       </div>
-      <div class="dialog-deal-psn">处理人：<input type="text" v-model="dialogPsn"></div>
+      <div class="dialog-deal-psn">
+        处理人：<input type="text" v-model="dialogPsn" />
+      </div>
       <div class="dialog-btns">
         <div class="close-btn" @click="clozeDialog">关闭</div>
-        <div class="done-btn" @click="okDialog" v-show="showDealBtn">已处理，解除告警</div>
+        <div class="done-btn" @click="okDialog" v-show="showDealBtn">
+          已处理，解除告警
+        </div>
       </div>
     </div>
+
+    <el-dialog title="密码修改" :visible.sync="dialogVisible" width="30%">
+      <el-form
+        :model="loginForm"
+        ref="loginForm"
+        label-position="left"
+        label-width="0px"
+        class="demo-ruleForm login-container"
+      >
+        <el-form-item prop="phone">
+          <el-input
+            type="text"
+            v-model="loginForm.phone"
+            auto-complete="off"
+            placeholder="请输账号"
+          ></el-input>
+        </el-form-item>
+        <el-form-item prop="msg">
+          <el-input
+            type="password"
+            v-model="loginForm.pwd"
+            auto-complete="off"
+            placeholder="请输密码"
+          ></el-input>
+        </el-form-item>
+        <el-form-item style="width: 100%">
+          <el-button
+            type="primary"
+            style="width: 100%"
+            @click.native.prevent="modifyHandle"
+            >确定修改</el-button
+          >
+        </el-form-item> </el-form
+      >
+    </el-dialog>
   </div>
 </template>
 
 <script>
+import { getExceptInfo, exceptDeal, getExceptLog, registered } from "../../api/api";
 
-import { 
-  getExceptInfo,
-  exceptDeal,
-  getExceptLog
-} from "../../api/api";
-
-import Statics from './static.vue'
-
+import Statics from "./static.vue";
 
 export default {
   data() {
     return {
-      startDate: new Date(2020,9,1),
+      startDate: new Date(2020, 9, 1),
       endDate: new Date(),
-      dialogShow:false,
+      dialogShow: false,
       dialogMsg: "",
-      dialogContent:"",
-      eleccabinetid:"md.xt.010012",
+      dialogContent: "",
+      eleccabinetid: "md.xt.010012",
       warningList: [],
       logList: [],
       warinTitle: "",
       dialogPsn: "",
       waring: {},
       log: {},
-      showDealBtn:true
+      showDealBtn: true,
+      dialogVisible: false,
+      loginForm: {}
     };
   },
   components: {
-    Statics
+    Statics,
   },
   created() {
     let self = this;
     self.updateLogs();
-    window.setInterval(function() {
-      self.getExceptInfo(self.eleccabinetid,1);
+    window.setInterval(function () {
+      self.getExceptInfo(self.eleccabinetid, 1);
     }, 10000);
   },
   methods: {
@@ -146,10 +189,10 @@ export default {
       this.dealWithWaring();
     },
     showWarinDetail(waring) {
-      this.waring =waring;
+      this.waring = waring;
       this.showDealBtn = true;
       this.dialogShow = true;
-      switch(waring.grade) {
+      switch (waring.grade) {
         case 1:
           this.warinTitle = "一级";
           break;
@@ -166,21 +209,19 @@ export default {
           this.warinTitle = "五级";
           break;
         default:
-          this.warinTitle = waring.grade+"级";
+          this.warinTitle = waring.grade + "级";
           break;
-
       }
-      
+
       this.dialogMsg = waring.description;
       this.dialogContent = "";
       this.dialogPsn = "";
-
     },
     gotoLogDetail(log) {
       this.log = log;
       this.dialogShow = true;
       this.showDealBtn = false;
-       switch(log.grade) {
+      switch (log.grade) {
         case 1:
           this.warinTitle = "一级";
           break;
@@ -197,34 +238,45 @@ export default {
           this.warinTitle = "五级";
           break;
         default:
-          this.warinTitle = log.grade+"级";
+          this.warinTitle = log.grade + "级";
           break;
-
       }
-      
+
       this.dialogMsg = log.description;
       this.dialogContent = log.resultDescription;
       this.dialogPsn = log.handler;
     },
-    getExceptInfo(id,type) {debugger
+    modifyPwd() {
+      this.dialogVisible = true;
+    },
+    modifyHandle() {
+      registered({
+        userId: this.loginForm.phone,
+        passward: this.loginForm.pwd
+      }).then(res=> {
+        this.dialogVisible = false;
+      })
+    },
+    getExceptInfo(id, type) {
+      debugger;
       let self = this;
       getExceptInfo({
         id: id,
-        type:type
-      }).then(res=> {
+        type: type,
+      }).then((res) => {
         self.warningList = res;
-      })
+      });
     },
     gotoDeviceDetail() {
       this.$router.push({
-          path: '/detail',
-          query: {
-              id: this.eleccabinetid
-          }
-        })
+        path: "/detail",
+        query: {
+          id: this.eleccabinetid,
+        },
+      });
     },
     searchLog() {
-      this.getExceptLog(this.eleccabinetid,1);
+      this.getExceptLog(this.eleccabinetid, 1);
     },
     dealWithWaring() {
       let self = this;
@@ -232,26 +284,26 @@ export default {
         id: self.waring.id,
         type: self.waring.type,
         resultDescription: self.dialogContent,
-        handler: self.dialogPsn
-      }).then(res=>{
+        handler: self.dialogPsn,
+      }).then((res) => {
         self.updateLogs();
-      })
+      });
     },
-    getExceptLog(id,type) {
+    getExceptLog(id, type) {
       let self = this;
       getExceptLog({
         id: id,
         type: type,
-        start_time: Math.round(self.startDate.getTime()/1000),
-        end_time:  Math.round(self.endDate.getTime()/1000)
-      }).then(res=> {
-        debugger
-        self.logList =res;
-      })
+        start_time: Math.round(self.startDate.getTime() / 1000),
+        end_time: Math.round(self.endDate.getTime() / 1000),
+      }).then((res) => {
+        debugger;
+        self.logList = res;
+      });
     },
     updateLogs() {
-      this.getExceptInfo(this.eleccabinetid,1);
-      this.getExceptLog(this.eleccabinetid,1);
+      this.getExceptInfo(this.eleccabinetid, 1);
+      this.getExceptLog(this.eleccabinetid, 1);
     },
     startDateChagne() {},
     formatDate(date) {
@@ -331,8 +383,8 @@ export default {
   display: flex;
   padding: 14px 0px;
 }
-.under-line{
-  border-bottom: 1px solid #061E50;
+.under-line {
+  border-bottom: 1px solid #061e50;
   width: 96%;
   margin: auto;
 }
@@ -468,7 +520,7 @@ export default {
 ::-webkit-scrollbar-thumb:window-inactive {
   background: rgba(255, 0, 0, 0.4);
 }
-.dialog{
+.dialog {
   position: fixed;
   top: 100px;
   left: 50%;
@@ -481,8 +533,8 @@ export default {
   background-image: url(../../../static/msg-box.png);
   background-color: #010736;
 }
-.dialog-title{
-  color: #F45353;
+.dialog-title {
+  color: #f45353;
   font-size: 17px;
   background-size: 326px 4px;
   background-repeat: no-repeat;
@@ -492,86 +544,94 @@ export default {
   height: 50px;
   line-height: 50px;
   font-weight: bold;
-
 }
-.dialog-msg{
+.dialog-msg {
   width: 769px;
   height: 82px;
   padding-top: 20px;
   overflow-y: auto;
   margin: 0 auto;
-  color: #2696E4;
+  color: #2696e4;
   line-height: 26px;
 }
-.dialog-text{
+.dialog-text {
   color: #fff;
   width: 769px;
   margin: 0 auto;
   padding-bottom: 15px;
 }
-.dialog-content{
+.dialog-content {
   width: 769px;
   height: 90px;
-  border: 1px solid #0F5A8F;
+  border: 1px solid #0f5a8f;
   margin: 0 auto;
   overflow: hidden;
 }
-.dialog-content textarea{
+.dialog-content textarea {
   background-color: #010736;
   width: 100%;
   height: 90px;
-  color: #2696E4;
+  color: #2696e4;
   border: none;
   padding: 5px;
 }
-.dialog-btns{
+.dialog-btns {
   width: 769px;
   margin: 20px auto;
 }
-.dialog .close-btn{
+.dialog .close-btn {
   width: 85px;
   height: 40px;
   text-align: center;
   line-height: 40px;
-  color: #2696E4;
+  color: #2696e4;
   background-size: 100% 100%;
   background-repeat: no-repeat;
   background-image: url(../../../static/close-btn.png);
   float: left;
   cursor: pointer;
 }
-.dialog .done-btn{
+.dialog .done-btn {
   text-align: center;
   width: 171px;
   height: 40px;
   line-height: 40px;
   background-size: 100% 100%;
-  color: #1BFF8C;
+  color: #1bff8c;
   background-repeat: no-repeat;
   background-image: url(../../../static/btn-icon.png);
   float: right;
   cursor: pointer;
 }
-.dialog-deal-psn{
+.dialog-deal-psn {
   width: 769px;
   margin: 0 auto;
   height: 30px;
   color: #fff;
   padding-top: 20px;
 }
-.dialog-deal-psn input{
+.dialog-deal-psn input {
   background-color: #010736;
-  border: 1px solid #2696E4;
-  color: #2696E4;
+  border: 1px solid #2696e4;
+  color: #2696e4;
   padding-left: 5px;
   height: 26px;
 }
-.title-top{
+.title-top {
   color: #fff;
   font-size: 16px;
   top: -30px;
   position: absolute;
   left: 10px;
   font-weight: bold;
+}
+.modify_passwd {
+  cursor: pointer;
+  color: #2696e4;
+  font-size: 12px;
+  top: -16px;
+  position: absolute;
+  right: 31px;
+  text-decoration: underline;
 }
 </style>
