@@ -1,4 +1,5 @@
-let baseUrl = 'http://39.105.48.131/smart/monitor/v1.0';
+// let baseUrl = 'http://39.105.48.131/smart/monitor/v1.0';  //测试
+let baseUrl = 'http://10.172.12.110/smart/monitor/v1.0';  //内网
 // http://39.105.48.131:8080/smart/monitor/v1.0/device/description
 import qs from 'qs';
 import request from './request'
